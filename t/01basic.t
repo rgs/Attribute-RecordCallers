@@ -1,6 +1,6 @@
 #!perl
 
-use Test::More tests => 28;
+use Test::More tests => 36;
 
 BEGIN { use_ok 'Attribute::RecordCallers' }
 
@@ -56,6 +56,25 @@ call_me_maybe(); $expected_line = 52;
 ::is(scalar @{$Attribute::RecordCallers::callers{'Bar::call_me_maybe'} // []}, 0, 'seen exactly 0 call in Bar::');
 for my $c (@{$Attribute::RecordCallers::callers{'main::call_me_maybe'}}) {
     ::is($c->[0], 'Bar', 'caller package is Bar');
+    ::like($c->[1], qr/01basic\.t$/, 'file name is correct');
+    ::is($c->[2], $expected_line, 'line number is correct');
+    ::ok($c->[3] - time < 10, 'time is correct');
+}
+
+Attribute::RecordCallers->clear;
+::is(scalar keys %Attribute::RecordCallers::callers, 0, 'caller list cleared');
+
+package Xyz;
+
+BEGIN { *call_me_maybe = \&::call_me_maybe; }
+
+call_me_maybe(); $expected_line = 71;
+
+::is($manual_counter, 5, 'called 5 times, manual check');
+::is(scalar @{$Attribute::RecordCallers::callers{'main::call_me_maybe'}}, 1, 'seen exactly 1 call in main::');
+::is(scalar @{$Attribute::RecordCallers::callers{'Xyz::call_me_maybe'} // []}, 0, 'seen exactly 0 call in Xyz::');
+for my $c (@{$Attribute::RecordCallers::callers{'main::call_me_maybe'}}) {
+    ::is($c->[0], 'Xyz', 'caller package is Xyz');
     ::like($c->[1], qr/01basic\.t$/, 'file name is correct');
     ::is($c->[2], $expected_line, 'line number is correct');
     ::ok($c->[3] - time < 10, 'time is correct');

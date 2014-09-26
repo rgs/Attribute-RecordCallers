@@ -8,7 +8,7 @@ use Time::HiRes qw(time);
 our $VERSION = '0.01';
 our %callers;
 
-sub UNIVERSAL::RecordCallers :ATTR(CODE) {
+sub UNIVERSAL::RecordCallers :ATTR(CODE,BEGIN) {
     my ($pkg, $glob, $referent) = @_;
     no strict 'refs';
     no warnings 'redefine';
