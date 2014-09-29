@@ -33,8 +33,25 @@ Attribute::RecordCallers - keep a record of who called a subroutine
 
     use Attribute::RecordCallers;
     sub call_me_and_i_ll_tell_you : RecordCallers { ... }
+    ...
+    END {
+        use Data::Dumper;
+        print Dumper \%Attribute::RecordCallers::callers;
+    }
 
 =head1 DESCRIPTION
+
+This module defines a function attribute that will trigger collection of
+callers for the designated functions.
+
+Each time a function with the C<:RecordCallers> attribute is run, a global
+hash C<%Attribute::RecordCallers::caller> is populated with caller information.
+The keys in the hash are the function names, and the elements are arrayrefs
+containing lists of quadruplets:
+
+    [ package, filename, line, timestamp ]
+
+The timestamp is obtained via C<Time::HiRes>.
 
 =head1 LICENSE
 
