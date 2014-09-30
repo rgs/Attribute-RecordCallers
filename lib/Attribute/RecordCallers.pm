@@ -11,7 +11,7 @@ our %callers;
 sub UNIVERSAL::RecordCallers :ATTR(CODE,BEGIN) {
     my ($pkg, $glob, $referent) = @_;
     no strict 'refs';
-    no warnings 'redefine';
+    no warnings 'redefine', 'once';
     my $subname = $pkg . '::' . *{$glob}{NAME};
     *$subname = sub {
         push @{ $callers{$subname} ||= [] }, [ caller, time ];

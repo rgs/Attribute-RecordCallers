@@ -2,4 +2,6 @@ lib/Attribute/RecordCallers.pm
 Makefile.PL
 MANIFEST
 t/01basic.t
+t/02anon.t
+t/03my.t
 t/99pod.t
