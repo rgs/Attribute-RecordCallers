@@ -1,5 +1,7 @@
 #!perl
 
+use strict;
+use warnings;
 use Test::More tests => 2;
 use Attribute::RecordCallers;
 
@@ -12,7 +14,7 @@ $closure->();
 ::is($calls, 1, 'the closure has been called');
 
 TODO: {
-    local $TODO = 'TBI';
+    local our $TODO = 'TBI';
     (my $k) = keys %Attribute::RecordCallers::callers;
     ::is($k, 'T::ANON', 'the call to the closure has been recorded');
 }

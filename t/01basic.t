@@ -1,5 +1,7 @@
 #!perl
 
+use strict;
+use warnings;
 use Test::More tests => 36;
 
 BEGIN { use_ok 'Attribute::RecordCallers' }
@@ -12,7 +14,7 @@ sub call_me_maybe : RecordCallers {
 
 ok(!exists $Attribute::RecordCallers::callers{'main::call_me_maybe'}, 'no caller yet');
 
-call_me_maybe(); my $expected_line = 15;
+call_me_maybe(); my $expected_line = 17;
 call_me_maybe();
 
 is($manual_counter, 2, 'called twice, manual check');
@@ -31,7 +33,7 @@ ok(!exists $Attribute::RecordCallers::callers{'main::call_me_maybe'}, 'caller li
 
 package Foo;
 
-::call_me_maybe(); $expected_line = 34;
+::call_me_maybe(); $expected_line = 36;
 
 ::is($manual_counter, 3, 'called 3 times, manual check');
 ::is(scalar @{$Attribute::RecordCallers::callers{'main::call_me_maybe'}}, 1, 'seen exactly 1 call');
@@ -49,7 +51,7 @@ package Bar;
 
 *call_me_maybe = \&::call_me_maybe;
 
-call_me_maybe(); $expected_line = 52;
+call_me_maybe(); $expected_line = 54;
 
 ::is($manual_counter, 4, 'called 4 times, manual check');
 ::is(scalar @{$Attribute::RecordCallers::callers{'main::call_me_maybe'}}, 1, 'seen exactly 1 call in main::');
@@ -68,7 +70,7 @@ package Xyz;
 
 BEGIN { *call_me_maybe = \&::call_me_maybe; }
 
-call_me_maybe(); $expected_line = 71;
+call_me_maybe(); $expected_line = 73;
 
 ::is($manual_counter, 5, 'called 5 times, manual check');
 ::is(scalar @{$Attribute::RecordCallers::callers{'main::call_me_maybe'}}, 1, 'seen exactly 1 call in main::');

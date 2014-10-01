@@ -8,6 +8,7 @@ BEGIN {
 }
 
 use 5.18.0;
+use warnings;
 use Test::More tests => 2;
 use feature 'lexical_subs';
 no warnings "experimental::lexical_subs";
