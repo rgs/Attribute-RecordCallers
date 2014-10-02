@@ -4,6 +4,7 @@ use strict;
 use warnings;
 use Attribute::Handlers;
 use Time::HiRes qw(time);
+use Scalar::Util qw(set_prototype);
 
 our $VERSION = '0.01';
 our %callers;
@@ -11,12 +12,14 @@ our %callers;
 sub UNIVERSAL::RecordCallers :ATTR(CODE,BEGIN) {
     my ($pkg, $glob, $referent) = @_;
     no strict 'refs';
-    no warnings 'redefine', 'once';
+    no warnings qw(redefine once prototype);
     my $subname = $pkg . '::' . *{$glob}{NAME};
     *$subname = sub {
         push @{ $callers{$subname} ||= [] }, [ caller, time ];
         goto &$referent;
     };
+    my $proto = prototype $referent;
+    set_prototype(\&$subname, $proto) if defined $proto;
 }
 
 sub clear {

@@ -8,6 +8,7 @@ WriteMakefile(
     LICENSE         => 'perl',
     PREREQ_PM       => {
         'Test::More'    => 0,
+        'Scalar::Util'  => '1.11', # for set_prototype
     },
     META_MERGE => {
         'meta-spec' => { version => 2 },
