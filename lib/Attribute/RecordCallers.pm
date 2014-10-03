@@ -3,17 +3,29 @@ package Attribute::RecordCallers;
 use strict;
 use warnings;
 use Attribute::Handlers;
+use Carp qw(carp);
 use Time::HiRes qw(time);
 use Scalar::Util qw(set_prototype);
 
 our $VERSION = '0.01';
+
+our @CARP_NOT = qw(Attribute::Handlers);
+# arguably a bug in Carp, but Attribute::Handlers does
+# nasty things with UNIVERSAL
+@Attribute::Handlers::CARP_NOT = qw(attributes);
+
 our %callers;
 
 sub UNIVERSAL::RecordCallers :ATTR(CODE,BEGIN) {
     my ($pkg, $glob, $referent) = @_;
     no strict 'refs';
     no warnings qw(redefine once prototype);
-    my $subname = $pkg . '::' . *{$glob}{NAME};
+    my $subname = *{$glob}{NAME};
+    if ($subname eq 'ANON') {
+        carp "Ignoring RecordCallers attribute on anonymous subroutine";
+        return;
+    }
+    $subname = $pkg . '::' . $subname;
     *$subname = sub {
         push @{ $callers{$subname} ||= [] }, [ caller, time ];
         goto &$referent;
