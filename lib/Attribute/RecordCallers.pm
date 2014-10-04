@@ -68,6 +68,12 @@ containing lists of quadruplets:
 
 The timestamp is obtained via C<Time::HiRes>.
 
+=head1 LIMITATIONS
+
+You cannot use the C<:RecordCaller> attribute on anonymous or lexical
+subroutines, or or subroutines with any other attribute (such as
+C<:lvalue>).
+
 =head1 LICENSE
 
 (c) Rafael Garcia-Suarez (rgs at consttype dot org) 2014
