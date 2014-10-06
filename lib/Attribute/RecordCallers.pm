@@ -68,6 +68,16 @@ containing lists of quadruplets:
 
 The timestamp is obtained via C<Time::HiRes>.
 
+=head1 FUNCTIONS
+
+=over 4
+
+=item clear()
+
+(not exported) This function will clear the C<%callers> global hash.
+
+=back
+
 =head1 LIMITATIONS
 
 You cannot use the C<:RecordCaller> attribute on anonymous or lexical
