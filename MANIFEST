@@ -1,6 +1,9 @@
 lib/Attribute/RecordCallers.pm
 Makefile.PL
 MANIFEST
+META.json
+META.yml
+README.md
 t/01basic.t
 t/02anon.t
 t/03my.t
