@@ -38,6 +38,11 @@ sub clear {
     %callers = ();
 }
 
+sub walk {
+    my $coderef = shift;
+    $coderef->($_, $callers{$_}) for sort keys %callers;
+}
+
 1;
 
 =head1 NAME
@@ -75,6 +80,13 @@ The timestamp is obtained via C<Time::HiRes>.
 =item clear()
 
 (not exported) This function will clear the C<%callers> global hash.
+
+=item walk(sub { ... })
+
+(not exported) Invokes the subroutine passed as argument once for each
+item in the C<%callers> hash. The arguments passed to it are the
+recorded subroutine name, and the arrayref of arrayrefs recording
+all the calls.
 
 =back
 

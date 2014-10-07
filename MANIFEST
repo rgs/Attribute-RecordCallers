@@ -7,4 +7,5 @@ t/03my.t
 t/04override.t
 t/05proto.t
 t/06lvalue.t
+t/07walk.t
 t/99pod.t
