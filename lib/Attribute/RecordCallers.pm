@@ -69,7 +69,7 @@ hash C<%Attribute::RecordCallers::caller> is populated with caller information.
 The keys in the hash are the function names, and the elements are arrayrefs
 containing lists of quadruplets:
 
-    [ package, filename, line, timestamp ]
+    [ $package, $filename, $line, $timestamp ]
 
 The timestamp is obtained via C<Time::HiRes>.
 
