@@ -96,6 +96,9 @@ You cannot use the C<:RecordCaller> attribute on anonymous or lexical
 subroutines, or or subroutines with any other attribute (such as
 C<:lvalue>).
 
+With perls older than version 5.16.0, setting the C<:RecordCallers>
+attribute will remove the prototype of any subroutine.
+
 =head1 LICENSE
 
 (c) Rafael Garcia-Suarez (rgs at consttype dot org) 2014
