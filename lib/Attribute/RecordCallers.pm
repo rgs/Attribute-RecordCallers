@@ -7,7 +7,7 @@ use Carp qw(carp);
 use Time::HiRes qw(time);
 use Scalar::Util qw(set_prototype);
 
-our $VERSION = '0.01';
+our $VERSION = '0.02';
 
 our @CARP_NOT = qw(Attribute::Handlers);
 # arguably a bug in Carp, but Attribute::Handlers does
